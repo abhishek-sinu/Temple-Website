@@ -18,3 +18,4 @@ export default function Donate() {
     </div>
   );
 }
+++ c:\React Project\React Practice\temple-website\src\app\donate\donate.js
