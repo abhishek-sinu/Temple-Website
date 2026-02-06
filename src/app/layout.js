@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaTelegramPlane, FaWordpress, FaTripadvisor, FaMapMarkerAlt } from "react-icons/fa";
+import Navbar from "./Navbar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -39,27 +40,7 @@ export default function RootLayout({ children }) {
           </div>
         </div>
         {/* Main Navigation */}
-        <nav className="flex items-center justify-between px-6 py-4 bg-blue-50 shadow-md sticky top-0 z-10">
-          <div className="flex items-center gap-4">
-            <a href="/">
-              <img src="/iskcon-logo.png" alt="ISKCON Logo" width={60} height={60} className="shadow-lg rounded" />
-            </a>
-          </div>
-          <ul className="hidden md:flex gap-8 text-lg font-medium text-blue-900 items-center">
-            <li><a href="/" className="hover:text-teal-600 font-semibold">Home</a></li>
-            <li><a href="/about" className="hover:text-teal-600">About</a></li>
-            <li><a href="/temple" className="hover:text-teal-600">Temple</a></li>
-            <li><a href="/activities" className="hover:text-teal-600">Activities</a></li>
-            <li><a href="/festivals" className="hover:text-teal-600">Festivals</a></li>
-            <li><a href="/contact-us" className="hover:text-teal-600">Contact Us</a></li>
-            <li><a href="/media" className="hover:text-teal-600">Media</a></li>
-            <li><a href="/shop" className="hover:text-teal-600">Shop</a></li>
-            <li><a href="/utilities" className="hover:text-teal-600">Utilities</a></li>
-          </ul>
-          <div className="flex items-center gap-4">
-            <a href="/donate" className="border-2 border-teal-400 text-teal-600 font-semibold rounded-full px-8 py-2 hover:bg-teal-50 transition text-lg">DONATE NOW</a>
-          </div>
-        </nav>
+        <Navbar />
         <main>{children}</main>
       </body>
     </html>

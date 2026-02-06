@@ -1,18 +1,76 @@
 
+"use client";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaTelegramPlane, FaWordpress, FaTripadvisor, FaMapMarkerAlt } from "react-icons/fa";
 
 export default function Home() {
+  const heroSlides = [
+    {
+      title: "Explore the history and teachings of Lord Krishna & Guru Parampara",
+      img: "/hero-image-1.jpeg",
+    },
+    {
+      title: "Seek Blessings of Srimati Radharani and Lord Krishna",
+      img: "/hero-image-2.jpeg",
+    },
+    {
+      title: "Divine Presence of Sri Sri Radha Madan Mohan",
+      img: "/hero-image-4.jpeg",
+    },
+    {
+      title: "Grace of Lord Jagannath",
+      img: "/hero-image-5.jpeg",
+    }
+  ];
+
+  const [slide, setSlide] = useState(0);
+  const [fade, setFade] = useState(true);
+  const fadeDuration = 600; // ms
+  const displayDuration = 3400; // ms
+
+  useEffect(() => {
+    let timeout1, timeout2;
+    function scheduleNext() {
+      timeout1 = setTimeout(() => {
+        setFade(false);
+        timeout2 = setTimeout(() => {
+          setSlide((prev) => (prev + 1) % heroSlides.length);
+          setFade(true);
+          scheduleNext();
+        }, fadeDuration);
+      }, displayDuration);
+    }
+    scheduleNext();
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+    };
+  }, [heroSlides.length]);
+
   return (
     <div className="min-h-screen bg-blue-50 font-sans">
+      <style>{`
+        .fade-hero {
+          transition: opacity ${fadeDuration}ms cubic-bezier(0.4,0,0.2,1);
+          opacity: 1;
+        }
+        .fade-hero.fade-out {
+          opacity: 0;
+        }
+      `}</style>
       {/* Hero Section */}
       <section className="relative flex flex-col md:flex-row items-center justify-between px-6 py-16 md:py-24 gap-10 md:gap-20 z-0">
         <div className="flex-1 z-10">
-          <span className="text-lg text-gray-500 mb-2 block">Since 1976</span>
-          <h1 className="text-5xl md:text-6xl font-extrabold text-blue-900 mb-6 leading-tight">Explore the history and teachings of Lord Krishna & Guru Parampara</h1>
+          <div className={`fade-hero${fade ? '' : ' fade-out'}`} key={slide + '-text'}>
+            <span className="text-lg text-gray-500 mb-2 block">Since 1976</span>
+            <h1 className="text-5xl md:text-6xl font-extrabold text-blue-900 mb-6 leading-tight">{heroSlides[slide].title}</h1>
+          </div>
         </div>
         <div className="flex-1 flex justify-center z-0">
-          <Image src="/temple-hero.jpg" alt="Temple" width={500} height={350} className="rounded-2xl shadow-xl object-cover" />
+          <div className={`fade-hero${fade ? '' : ' fade-out'}`} key={slide + '-img'}>
+            <Image src={heroSlides[slide].img} alt="Temple" width={500} height={350} className="rounded-2xl shadow-xl object-cover" />
+          </div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center opacity-20 z-0">
           <Image src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Temple Background" fill className="object-cover" />
@@ -91,7 +149,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-8 items-center mb-8">
             {/* Google Review Summary Card */}
             <div className="flex flex-col items-center justify-center bg-white rounded-3xl shadow-2xl px-10 py-8 border-4 border-blue-200 relative min-w-[270px]">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo" className="w-14 h-14 mb-3 drop-shadow-lg" />
+              <Image src="/google-logo.png" alt="Google Logo" width={56} height={56} className="mb-3 drop-shadow-lg" />
               <span className="text-3xl font-extrabold text-blue-900 mb-2 tracking-wide">EXCELLENT</span>
               <span className="flex items-center justify-center mb-2">
                 {[...Array(5)].map((_, i) => (
